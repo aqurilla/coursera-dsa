@@ -14,6 +14,23 @@ class Solution:
             j = j-1
             
         return
+	
+    def firstUniqChar(self, s: str) -> int:
+        
+        mydict = {}
+        
+        for i,c in enumerate(s):
+            if c not in mydict:
+                mydict[c] = [i, 1]
+            else:
+                mydict[c][1] += 1
+                        
+        filt_l = [v[0] for (k,v) in mydict.items() if v[1]==1]
+        
+        if filt_l == []:
+            return -1
+        else:
+            return min(filt_l)
 
     def firstNonRepeatingChar(self, s: str) -> int:
         
