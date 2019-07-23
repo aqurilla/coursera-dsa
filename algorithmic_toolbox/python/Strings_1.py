@@ -14,3 +14,23 @@ class Solution:
             j = j-1
             
         return
+
+    def firstNonRepeatingChar(self, s: str) -> int:
+        
+        i = 0
+        j = 0
+        
+        while i<len(s):
+            k = 0
+            j = i+1
+            while j<len(s) and s[i]==s[j]:
+                k+=1
+                j+=1
+            if k == 0:
+                return i
+            elif j==len(s):
+                return -1
+            else:
+                i = j
+
+    
