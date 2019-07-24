@@ -50,4 +50,23 @@ class Solution:
             else:
                 i = j
 
+    def isAnagram(self, s: str, t: str) -> bool:
+        mydict = {}
+        
+        for c1 in s:
+            mydict[c1] = mydict.get(c1,0) + 1
+            
+        for c2 in t:
+            if c2 in mydict:
+                mydict[c2] -= 1
+            else:
+                return False
+            
+        for v in mydict.values():
+            if v != 0:
+                return False
+        
+        return True
+
+    
     
