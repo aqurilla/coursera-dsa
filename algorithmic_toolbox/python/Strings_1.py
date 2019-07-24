@@ -68,5 +68,23 @@ class Solution:
         
         return True
 
+    def isPalindrome(self, s: str) -> bool:
+        if s==[]:
+            return True
+        
+        s_corr = [c for c in s.lower() if c.isalnum()]
+        
+        i = 0
+        j = len(s_corr)-1
+        
+        while i<j:
+            if s_corr[i] != s_corr[j]:
+                return False
+            else:
+                i += 1
+                j -= 1
+        
+        return True
+
     
     
