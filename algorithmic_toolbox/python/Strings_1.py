@@ -86,5 +86,30 @@ class Solution:
         
         return True
 
-    
+    def myAtoi(self, str: str) -> int:
+        
+        str2 = [c for c in str if c.isnumeric() or c=='-']
+        
+        if str2 == []:
+            return 0
+        
+        neg = False
+        
+        if str2[0]=='-':
+            neg = True
+            str2 = str2[1:]
+            
+        j = len(str2)-1
+        i = 1
+        total = 0 
+        
+        while j>=0:
+            total += i*int(str2[j])
+            j -= 1
+            i *= 10
+            
+        if neg:
+            return -1*total
+        else:
+            return total
     
