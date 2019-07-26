@@ -132,3 +132,31 @@ class Solution:
             i += 1
                 
         return -1
+
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        
+        minl = 1000000
+        
+        for s in strs:
+            if s == "":
+                return ""
+            minl = min(minl, len(s))
+            
+        i = 0
+        
+        while i < minl:
+            arr = []
+            for s in strs:
+                arr.append(s[i])
+            
+            arrs = set(arr)
+            
+            if len(arrs) == 1:
+                i += 1
+                if i == minl:
+                    return s[:i]
+            else:
+                if i==0:
+                    return ""
+                else:
+                    return s[:i]
