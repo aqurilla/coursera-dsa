@@ -34,3 +34,15 @@ while True:
     else:
         print('Error')
         break
+
+# Selection sort code        
+def selectionSort(a):
+    
+    for i in range(len(a)):
+        minidx = i
+        for j in range(i+1, len(a)):
+            if a[j] < a[minidx]:
+                minidx = j
+        a[minidx], a[i] = a[i], a[minidx]
+
+    return a
