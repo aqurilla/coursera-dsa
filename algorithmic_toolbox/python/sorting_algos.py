@@ -35,7 +35,7 @@ while True:
         print('Error')
         break
 
-# Selection sort code        
+# Selection Sort        
 def selectionSort(a):
     
     for i in range(len(a)):
@@ -46,3 +46,30 @@ def selectionSort(a):
         a[minidx], a[i] = a[i], a[minidx]
 
     return a
+
+# Radix Sort O(n)
+def getDigit(num, place):
+    return math.floor(abs(num)/pow(10,place)) % 10
+
+def digitCount(num):
+    if num == 0: return 1
+    return math.floor(math.log10(abs(num))) + 1
+
+def mostDigits(arr):
+    maxl = -1
+    for n in arr:
+        maxl = max(maxl, digitCount(n))
+    return maxl
+
+def radixSort(arr):
+    maxDigitCount = mostDigits(arr)
+    for i in range(maxDigitCount):
+        digitBuckets = [[] for _ in range(10)]
+        for n in arr:
+            bn = getDigit(n, i)
+            digitBuckets[bn].append(n)
+        arr = []
+        for k in range(10):
+            arr.extend(digitBuckets[k])
+        
+    return arr
