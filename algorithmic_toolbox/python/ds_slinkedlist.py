@@ -10,10 +10,11 @@ class SinglyLinkedList:
         self.tail = None
         
     def push(self, val):
+        print(f'Pushing {val}')
         newNode = Node(val)
         if not self.head:
             self.head = newNode
-            self.tail = newNode
+            self.tail = self.head
         else:
             self.tail.next = newNode
             self.tail = newNode
@@ -83,7 +84,7 @@ class SinglyLinkedList:
             print(f'Changing idx: {idx} to val: {val}')
             tmp.val = val
             return True
-        
+    
     def insert(self, idx, val):
         if idx < 0 or idx > self.length:
             return False
@@ -116,31 +117,45 @@ class SinglyLinkedList:
             tmp.next = removedNode.next
             self.length -= 1
             return removedNode
-    
-    def traverseList(self):
-        # func for traversing the list
-        k = self.head
-        while k:
-            print(k.val)
-            k = k.next
+        
+    def reverseLL(self):
+        if self.length == 0: return
+        initHead  = self.head
+        prevNode = None
+        currNode = self.head
+        while currNode:
+            nextNode = currNode.next
+            currNode.next = prevNode
+            prevNode = currNode
+            currNode = nextNode
+        self.head = prevNode
+        self.tail = initHead
         return
             
+    def traverse(self):
+        # Func for traversing list
+        print('Traversing list:')
+        print('[', end = '')
+        k = self.head
+        while k:
+            if k.next:
+                print(k.val, end = ', ')
+            else:
+                print(k.val, end = '')
+            k = k.next
+        print(']')
+        return
     
-# def push(self, val):
-#     newNode = Node(val)
-#     newNode.next = self.head
-#     if self.length == 0:
-#         self.tail = newNode
-#     self.head = newNode
-#     self.length += 1
-        
+# Driver code
 a = SinglyLinkedList()
 
-a.push('hi')
-print(a.tail.val)
-print(a.length)
-a.push('bye')
-print(a.tail.val)
-print(a.length)
+a.push(1)
+a.push(27)
+a.push(98)
+a.push(210)
+a.push(123)
 
-print(a.traverseList())
+a.traverse()
+a.reverseLL()
+a.traverse()
+
