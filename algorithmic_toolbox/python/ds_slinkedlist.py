@@ -83,6 +83,39 @@ class SinglyLinkedList:
             print(f'Changing idx: {idx} to val: {val}')
             tmp.val = val
             return True
+        
+    def insert(self, idx, val):
+        if idx < 0 or idx > self.length:
+            return False
+        if idx == 0:
+            self.unshift(val)
+            return True
+        if idx == self.length:
+            self.push(val)
+            return True
+        else:
+            tmp = self.getter(idx-1)
+            newNode = Node(val)
+            newNode.next = tmp.next
+            tmp.next = newNode
+            self.length += 1
+            return True
+    
+    def remove(self, idx, val):
+        if idx < 0 or idx >= self.length:
+            return None
+        if idx == 0:
+            self.shift(val)
+            return True
+        if idx == self.length-1:
+            self.pop(val)
+            return True
+        else:
+            tmp = self.getter(idx-1)
+            removedNode = tmp.next
+            tmp.next = removedNode.next
+            self.length -= 1
+            return removedNode
     
     def traverseList(self):
         # func for traversing the list
