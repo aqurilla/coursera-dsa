@@ -37,6 +37,53 @@ class SinglyLinkedList:
         print(f'Popping {k.val}')
         return k.val
     
+    def shift(self):
+        # Remove value from head
+        if self.length == 0:
+            print('Empty list!')
+            return None
+        tmp = self.head
+        print(f'Shifting {tmp.val}')
+        self.head = self.head.next
+        self.length -= 1
+        if self.length == 0: self.tail = None
+        return tmp.val
+    
+    def unshift(self, val):
+        # Add value at head
+        newNode = Node(val)
+        print(f'Unshifting {val}')
+        if self.length == 0:
+            self.head = newNode
+            self.tail = newNode
+        else:
+            newNode.next = self.head
+            self.head = newNode
+        self.length += 1
+        return
+    
+    def getter(self, idx):
+        if idx < 0 or idx >= self.length:
+            return None
+        counter = 0
+        tmp = self.head
+        while counter != idx:
+            tmp = tmp.next
+            counter += 1
+        print(f'Got {tmp.val}')
+        return tmp
+    
+    def setter(self, idx, val):
+        # Sets value of existing node
+        tmp = self.getter(idx)
+        if tmp == None:
+            print(f'{idx}: Invalid index')
+            return False
+        else:
+            print(f'Changing idx: {idx} to val: {val}')
+            tmp.val = val
+            return True
+    
     def traverseList(self):
         # func for traversing the list
         k = self.head
