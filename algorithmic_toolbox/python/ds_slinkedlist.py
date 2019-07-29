@@ -20,6 +20,23 @@ class SinglyLinkedList:
         self.length += 1
         return
     
+    def pop(self):
+        if self.length == 0:
+            print('Empty list!')
+            return None
+        
+        pre = None
+        k = self.head
+        while k.next:
+            pre = k
+            k = k.next
+        self.tail = pre
+        if self.tail: self.tail.next = None
+        self.length -= 1
+        if self.length == 0: self.head = None
+        print(f'Popping {k.val}')
+        return k.val
+    
     def traverseList(self):
         # func for traversing the list
         k = self.head
