@@ -56,6 +56,7 @@ class DoublyLinkedList:
         return tmp
     
     def unshift(self, val):
+        # Add node at beginning of DLL
         newNode = Node(val)
         if self.length == 0:
             self.head = newNode
@@ -66,7 +67,76 @@ class DoublyLinkedList:
             self.head = newNode
         self.length += 1
         return self
-            
+    
+    def getter(self, idx):
+        # Get index value
+        if idx < 0 or idx >= self.length:
+            print('Invalid index')
+            return None
+        if idx <= self.length/2:
+            # Start at head
+            counter = 0
+            tmp = self.head
+            while counter != idx:
+                tmp = tmp.next
+                counter += 1
+        else:
+            # Start at tail
+            counter = self.length - 1
+            tmp = self.tail
+            while counter != idx:
+                tmp = tmp.prev
+                counter -= 1
+        print(f'Got {tmp.val}')
+        return tmp
+    
+    def setter(self, idx, val):
+        # Set index value
+        setNode = self.getter(idx)
+        if setNode:
+            setNode.val = val
+            return True
+        else:
+            print('Invalid index')
+            return False
+        
+    def insert(self, idx, val):
+        # Insert into DLL
+        if idx < 0 or idx > self.length:
+            return False
+        if idx == 0:
+            return self.unshift(val)
+        if idx == self.length:
+            return self.push(val)
+        currNode = Node(val)
+        prevNode = self.getter(idx-1)
+        nextNode = prevNode.next
+        currNode.prev = prevNode
+        currNode.next = nextNode
+        prevNode.next = currNode
+        nextNode.prev = currNode
+        self.length += 1
+        return True
+    
+    def remove(self, idx):
+        # Remove from DLL
+        if idx < 0 or idx >= self.length:
+            print('Invalid index')
+            return None
+        if idx == 0:
+            return self.shift()
+        if idx == self.length-1:
+            return self.pop()
+        currNode = self.getter(idx)
+        prevNode = currNode.prev
+        nextNode = currNode.next
+        prevNode.next = nextNode
+        nextNode.prev = prevNode
+        currNode.prev = None
+        currNode.next = None
+        self.length -= 1
+        return currNode
+             
     def traverse(self):
         # Func for traversing list
         print('Traversing list:')
@@ -91,11 +161,9 @@ a.push(2120)
 a.push(1243)
 
 a.traverse()
+
 a.pop()
 a.pop()
-a.pop()
-a.pop()
-a.pop()
-a.pop()
-a.pop()
+
 a.traverse()
+
