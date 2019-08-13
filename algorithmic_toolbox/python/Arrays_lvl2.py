@@ -31,3 +31,16 @@ class Solution:
         
         # Modified matrix
         self.print2d(matrix)
+        
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        """
+        Finds groups of anagrams in input list of strings
+        """
+        soln = {}     
+        for word in strs:
+            sortedWord = "".join(sorted(word))
+            if sortedWord not in soln:
+                soln[sortedWord] = []
+            soln[sortedWord].append(word)
+                  
+        return soln.values()
