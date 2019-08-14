@@ -44,3 +44,24 @@ class Solution:
             soln[sortedWord].append(word)
                   
         return soln.values()
+    
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        
+        if s == "":
+            return 0
+        
+        left = 0
+        right = 0
+        maxlen = 0
+        mychars = set()
+        
+        while right < len(s) and left < len(s):
+            if s[right] not in mychars:
+                mychars.add(s[right])
+                right += 1
+                maxlen = max(maxlen, right - left) 
+            else:
+                mychars.remove(s[left])
+                left += 1
+                
+        return maxlen
