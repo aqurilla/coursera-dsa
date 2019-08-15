@@ -80,3 +80,29 @@ class Solution:
                 return True
         
         return False
+    
+    def threeSum(self, nums: List[int]) -> List[List[int]]:   
+        soln = []      
+        nums.sort()    
+        for idx in range(len(nums) - 2):
+            if idx > 0 and nums[idx] == nums[idx-1]:
+                continue
+            n = nums[idx]
+            left = idx+1
+            right = len(nums) - 1
+            while left < right:
+                sum2 = nums[left] + nums[right]
+                if sum2 == -n:
+                    triplet = [n, nums[left], nums[right]]
+                    soln.append(triplet)
+                    while left < right and nums[left]==nums[left+1]:
+                        left += 1
+                    left += 1
+                    while left < right and nums[right]==nums[right-1]:
+                        right -= 1
+                    right -= 1
+                elif sum2 < -n:
+                    left += 1
+                else:
+                    right -= 1
+        return soln
