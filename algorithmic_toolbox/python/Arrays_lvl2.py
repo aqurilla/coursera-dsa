@@ -65,3 +65,18 @@ class Solution:
                 left += 1
                 
         return maxlen
+    
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        
+        n1 = math.inf
+        n2 = math.inf
+        
+        for n in nums:
+            if n <= n1:
+                n1 = n
+            elif n <= n2:
+                n2 = n
+            else:
+                return True
+        
+        return False
