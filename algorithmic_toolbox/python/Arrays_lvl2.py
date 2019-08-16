@@ -106,3 +106,38 @@ class Solution:
                 else:
                     right -= 1
         return soln
+    
+    def longestPalindrome(self, s: str) -> str:
+        # O(n^2) time solution
+        if len(s)==1:
+            return s
+        
+        maxlen = 1
+        maxleft = 0
+        left = 0
+        right = 0
+        
+        for i in range(1, len(s)):
+            # Odd-number of terms
+            left = i-1
+            right = i+1
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                length = right - left + 1
+                if length > maxlen:
+                    maxleft = left
+                    maxlen = length
+                left -= 1
+                right += 1
+                
+            # Even-number of terms
+            left = i-1
+            right = i
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                length = right - left + 1
+                if length > maxlen:
+                    maxleft = left
+                    maxlen = length
+                left -= 1
+                right += 1
+                
+        return s[maxleft : maxleft+maxlen]
