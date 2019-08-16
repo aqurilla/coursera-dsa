@@ -39,6 +39,27 @@ class Solution:
             total = total//10
             
         return head
+    
+    def oddEvenList(self, head: ListNode) -> ListNode:
+        
+        if not head or head.next == None:
+            return head
+        
+        oddhead = head
+        evenhead = head.next
+        
+        oddPtr = oddhead
+        evenPtr = evenhead
+        
+        while oddPtr and evenPtr and oddPtr.next and evenPtr.next:
+            oddPtr.next = oddPtr.next.next
+            evenPtr.next = evenPtr.next.next
+            oddPtr = oddPtr.next
+            evenPtr = evenPtr.next
+            
+        oddPtr.next = evenhead
+        
+        return oddhead
             
             
             
