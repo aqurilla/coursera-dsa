@@ -45,56 +45,25 @@ class Solution(object):
         return soln[k-1]
     
     def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
-        soln = []
-        nodeq = []
+        if not root: return []
+        nodeq, soln, tmp = [], [], []
         
         nodeq.append(root)
-        
-        k = 1
-        lvl = 1
-        counter = 0
+        flag = 1
         
         while nodeq:
-            elem = nodeq.pop(0)
-            if not elem:
-                soln.append(None)
-                continue
-            soln.append(elem.val)
-            if elem.left:
-                nodeq.append(elem.left)
+            tmp = []
+            for i in range(len(nodeq)):
+                elem = nodeq.pop(0)
+                tmp.append(elem.val)
+                if elem.left:
+                    nodeq.append(elem.left)
+                if elem.right:
+                    nodeq.append(elem.right)
+            if flag > 0:
+                soln.append(tmp)
             else:
-                nodeq.append(None)
-            if elem.right:
-                nodeq.append(elem.right)
-            else:
-                nodeq.append(None)
-        
-        # Remove trailing None
-        while soln and not soln[-1]:
-            soln.pop()
-        
-        zigzag = []
-        
-        numelem = 1
-        start = 0
-        end = 0
-        k = 1
-        
-        while end < len(soln):
-            start = end
-            end = start + numelem
-            if end >= len(soln):
-                tmp = soln[start:]
-            else:
-                tmp = soln[start:end]
-            tmp = [x for x in tmp if x is not None]
+                soln.append(reversed(tmp))
+            flag *= -1
             
-            if k>0:
-                zigzag.append(tmp)
-            else:
-                zigzag.append(reversed(tmp))
-                
-            k *= -1
-            numelem *= 2
-        
         return soln
