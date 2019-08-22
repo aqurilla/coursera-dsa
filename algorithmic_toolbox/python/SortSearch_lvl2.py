@@ -14,3 +14,16 @@ class Solution:
         nums[mydict[0]+mydict[1]:mydict[0]+mydict[1]+mydict[2]] = [2]*mydict[2]
         
         return
+    
+    def findPeakElement(self, nums: List[int]) -> int:
+        if len(nums)==1:
+            return 0
+        
+        for n in range(1,len(nums)-1):
+            if nums[n-1]<nums[n] and nums[n+1]<nums[n]:
+                return n
+            
+        if nums[0]>nums[1]:
+            return 0
+        elif nums[len(nums)-1]>nums[len(nums)-2]:
+            return len(nums)-1
