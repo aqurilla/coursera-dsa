@@ -53,3 +53,8 @@ class Solution:
         
         # Not found
         return [-1, -1]
+    
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        # O(nlogn) solution
+        nums.sort(reverse=True)
+        return nums[k-1]
