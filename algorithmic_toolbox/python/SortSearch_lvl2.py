@@ -101,16 +101,17 @@ class Solution:
         :type target: int
         :rtype: bool
         """
-        if not matrix:
+        # (97%)
+        if matrix == [] or matrix == [[]]:
             return False
-        
-        m = len(matrix)
         n = len(matrix[0])
-        
         left = 0
         right = n-1
         
         for mat in matrix:
+            if mat[0] > target or mat[-1] < target:
+                continue
+            
             left = 0
             right = n-1
             
