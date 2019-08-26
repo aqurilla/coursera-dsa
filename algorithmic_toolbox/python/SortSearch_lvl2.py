@@ -65,19 +65,20 @@ class Solution:
             return []
         
         mydict = {}
+        freq = {}
+        soln = []
         
         for n in nums:
             mydict[n] = mydict.get(n,0) + 1
             
-        soln = []
-        
         for key, val in mydict.items():
-            if not soln:
-                soln.append((key, val))
-                continue
-            i = 0
-            while i<len(soln) and soln[i][1]>=val:
-                i += 1
-            soln.insert(i, (key,val))
-        
-        return [key for (key,val) in soln[:k]]
+            if val not in freq:
+                freq[val] = [key]
+            else:
+                freq[val].append(key)
+                
+        for x in range(len(nums), 0, -1):
+            if x in freq:
+                soln.extend(freq[x])
+                
+        return soln[:k]
