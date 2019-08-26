@@ -84,31 +84,13 @@ class Solution:
         return soln[:k]
     
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        
+        # (90%)
         soln = []
         
-        intervals = sorted(intervals, key = lambda x: x[0])
-        
-        for interval in intervals:
-            if not soln:
-                soln.append(interval)
-                continue
-            intersect = False
-            for i in range(len(soln)):
-                # Go through intervals in soln
-                solnint = soln[i]
-                if (solnint[1] < interval[0]) or (interval[1] < solnint[0]):
-                    # No intersection condition
-                    continue
-                else:
-                    # Intersection
-                    start = min(solnint[0], interval[0])
-                    end = max(solnint[1], interval[1])
-                    soln[i] = [start, end]
-                    intersect = True
-                    break
-            # If it doesnt overlap anything
-            if not intersect:
+        for interval in sorted(intervals, key = lambda x: x[0]):
+            if soln and interval[0] <= soln[-1][1]:
+                soln[-1][1] = max(interval[1], soln[-1][1])
+            else:
                 soln.append(interval)
                 
         return soln
