@@ -94,3 +94,33 @@ class Solution:
                 soln.append(interval)
                 
         return soln
+    
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix:
+            return False
+        
+        m = len(matrix)
+        n = len(matrix[0])
+        
+        left = 0
+        right = n-1
+        
+        for mat in matrix:
+            left = 0
+            right = n-1
+            
+            while left <= right:
+                mid = left + (right-left)//2
+                if mat[mid] == target:
+                    return True
+                elif mat[mid] > target:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+        
+        return False
