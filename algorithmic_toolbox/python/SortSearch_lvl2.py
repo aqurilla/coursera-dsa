@@ -58,3 +58,26 @@ class Solution:
         # O(nlogn) solution
         nums.sort(reverse=True)
         return nums[k-1]
+    
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+        if not nums:
+            return []
+        
+        mydict = {}
+        
+        for n in nums:
+            mydict[n] = mydict.get(n,0) + 1
+            
+        soln = []
+        
+        for key, val in mydict.items():
+            if not soln:
+                soln.append((key, val))
+                continue
+            i = 0
+            while i<len(soln) and soln[i][1]>=val:
+                i += 1
+            soln.insert(i, (key,val))
+        
+        return [key for (key,val) in soln[:k]]
