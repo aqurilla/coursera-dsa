@@ -40,3 +40,9 @@ class Solution:
                 soln.append([elem] + Lst)
                 
         return soln
+    
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        soln = [[]]
+        for n in nums:
+            soln = soln + [[n] + elem for elem in soln]                 
+        return soln
