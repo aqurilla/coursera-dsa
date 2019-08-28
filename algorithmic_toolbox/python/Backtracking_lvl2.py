@@ -18,3 +18,25 @@ class Solution:
         soln = [''.join(elem) for elem in itertools.product(*charlist)]
         
         return soln
+    
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        # In-built function
+        # return itertools.permutations(nums)
+        
+        # Recursive approach
+        if not nums:
+            return []
+        
+        if len(nums) == 1:
+            return [nums]
+        
+        soln = []
+        
+        for i in range(len(nums)):
+            elem = nums[i]
+            rLst = nums[:i] + nums[i+1:]
+            
+            for Lst in self.permute(rLst):
+                soln.append([elem] + Lst)
+                
+        return soln
