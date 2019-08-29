@@ -64,6 +64,7 @@ class Solution:
         if numleft > 0:
             self.genPar(genstr + "(", numleft-1, numright, res)
         
-        # add right paren if numright > numleft
+        # add right paren if number of remaining right paren are
+        # greater
         if numleft < numright:
             self.genPar(genstr + ")", numleft, numright-1, res)
