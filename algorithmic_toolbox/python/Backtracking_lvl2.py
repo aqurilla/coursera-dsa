@@ -46,3 +46,24 @@ class Solution:
         for n in nums:
             soln = soln + [[n] + elem for elem in soln]                 
         return soln
+    
+    def generateParenthesis(self, n: int) -> List[str]:
+        # Generate set of all valid parenthesis containing
+        # n pairs
+        soln = []
+        self.genPar("", n, n, soln)
+        return soln
+        
+    def genPar(self, genstr, numleft, numright, res):
+        # boundary condition
+        if numleft == 0 and numright == 0:
+            res.append(genstr)
+            return
+        
+        # add left paren if possible
+        if numleft > 0:
+            self.genPar(genstr + "(", numleft-1, numright, res)
+        
+        # add right paren if numright > numleft
+        if numleft < numright:
+            self.genPar(genstr + ")", numleft, numright-1, res)
