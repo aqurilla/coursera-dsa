@@ -23,3 +23,16 @@
             return -1
         else:
             return numcoins[amount]
+        
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        # O(n^2) soln
+        if not nums:
+            return 0
+        lis = [1 for _ in range(len(nums))]
+    
+        for j in range(1, len(nums)):
+            for i in range(j):
+                if nums[j] > nums[i]:
+                    lis[j] = max(lis[j], lis[i] + 1)
+        
+        return max(lis)
