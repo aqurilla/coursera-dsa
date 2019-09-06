@@ -36,3 +36,17 @@
                     lis[j] = max(lis[j], lis[i] + 1)
         
         return max(lis)
+    
+    def uniquePaths(self, m: int, n: int) -> int:
+        
+        pathmat = [ [0]*n for _ in range(m)]
+        
+        
+        for i in range(m):
+            for j in range(n):
+                if i == 0 or j == 0:
+                    pathmat[i][j] = 1
+                else:
+                    pathmat[i][j] = pathmat[i-1][j] + pathmat[i][j-1]
+        
+        return pathmat[-1][-1]
