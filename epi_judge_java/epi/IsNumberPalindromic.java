@@ -4,8 +4,9 @@ import epi.test_framework.GenericTest;
 public class IsNumberPalindromic {
   @EpiTest(testDataFile = "is_number_palindromic.tsv")
   public static boolean isPalindromeNumber(int x) {
-    // TODO - you fill in here.
-    return true;
+    if (x < 0) return false;
+    String stringRep = Integer.toString(x, 10);
+    return stringRep.equals(new StringBuilder(stringRep).reverse().toString());
   }
 
   public static void main(String[] args) {
