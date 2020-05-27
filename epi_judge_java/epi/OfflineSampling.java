@@ -6,10 +6,25 @@ import epi.test_framework.TimedExecutor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class OfflineSampling {
+  /**
+   * Randomizes a section of the input array, given the required size
+   * @param k Length of random subset to return
+   * @param A Array of distinct elements
+   */
   public static void randomSampling(int k, List<Integer> A) {
-    // TODO - you fill in here.
-    return;
+
+    int startIdx = 0, swapIdx, length = A.size()-1;
+
+    // Select a random index in remaining list
+    while (startIdx < k) {
+       swapIdx = ThreadLocalRandom.current().nextInt(startIdx, length+1);
+      // Swap with current index
+      Collections.swap(A, startIdx, swapIdx);
+      startIdx++;
+    }
   }
   private static boolean randomSamplingRunner(TimedExecutor executor, int k,
                                               List<Integer> A)
