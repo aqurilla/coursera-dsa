@@ -1,211 +1,129 @@
 package com.aqurilla.datastructures;
 
+import java.util.Iterator;
+
+@SuppressWarnings("unchecked")
 /**
- * Dynamic Array - Mutable array implementation with automatic resizing
+ * Dynamic Array: Auto-resizing array implementation
  *
- * @author aqurilla
+ * @author Nitin Suresh
  *
+ * @param <T> type of element stored in array
  */
-public class DynamicArray {
+public class DynamicArray<T> implements Iterable<T> {
 
-	private int size = 0;
-	private int capacity = 10;
-
-	private int[] arr = new int[capacity];
+	private T[] arr;
+	private int len = 0;
+	private int capacity = 0;
 
 	// Constructors
 	public DynamicArray() {
+		this(10);
 	}
 
-	public DynamicArray(int[] theArr) {
-		if (theArr.length > capacity) {
-			arr = new int[theArr.length * 2];
+	public DynamicArray(int capacity) {
+		if (capacity < 0) {
+			throw new IllegalArgumentException("Illegal capacity entered: " + capacity);
 		}
-		for (int i = 0; i < theArr.length; i++) {
-			arr[i] = theArr[i];
-		}
-		size = theArr.length;
+		this.capacity = capacity;
+		arr = (T[]) new Object[capacity];
 	}
 
 	public int size() {
-		return size;
-	}
-
-	public int capacity() {
-		return capacity;
+		return len;
 	}
 
 	public boolean isEmpty() {
-		return size == 0;
+		return size() == 0;
 	}
 
-	public int at(int i) {
-		if (i > size) {
-			throw new Error("Index out of bounds");
-		}
-		return arr[i];
+	public T get(int index) {
+		return arr[index];
 	}
 
-	// Push to end of array
-	public void push(int elem) {
-		if (size == capacity) {
-			resize();
-		}
-		size++;
-		arr[size - 1] = elem;
-	}
-
-	// Insert element at index
-	public void insert(int index, int elem) {
-		if (size == capacity) {
-			resize();
-		}
-		for (int i = size; i > index; i--) {
-			arr[i] = arr[i - 1];
-		}
+	public void set(int index, T elem) {
 		arr[index] = elem;
-		size++;
 	}
 
-	// Prepend to start of array
-	public void prepend(int elem) {
-		insert(0, elem);
-	}
-
-	// Pop from end of array
-	public int pop() {
-		if (isEmpty()) {
-			throw new Error("Popping from empty array");
+	public void clear() {
+		for (int i = 0; i < capacity; i++) {
+			arr[i] = null;
 		}
-		int elem = arr[size - 1];
-		delete(size - 1);
+		len = 0;
+	}
+
+	// Add element to end of list
+	public void add(T elem) {
+		// if array reaches capacity, double size
+		if (len + 1 >= capacity) {
+			if (capacity == 0) {
+				capacity = 1;
+			} else {
+				capacity *= 2;
+			}
+			T[] temparr = (T[]) new Object[capacity];
+			for (int i = 0; i < len; i++) {
+				temparr[i] = arr[i];
+			}
+			arr = temparr;
+		}
+		arr[len++] = elem;
+	}
+
+	// Remove element from specified index
+	public T removeAt(int index) {
+		if (index >= len || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		T elem = arr[index];
+		for (int i = index; i < len - 1; i++) {
+			arr[i] = arr[i + 1];
+		}
+		arr[len - 1] = null;
+		len--;
 		return elem;
 	}
 
-	// Delete element at index
-	public void delete(int index) {
-		for (int i = index; i < size; i++) {
-			arr[i] = arr[i + 1];
-		}
-		size--;
-		if (size < capacity / 4) {
-			resize();
-		}
-	}
-
-	// Remove element from multiple places in array
-	public void remove(int elem) {
-		int[] temp = new int[capacity];
-		int j = 0;
-		int count = 0;
-
-		if (isEmpty()) {
-			throw new Error("Empty array");
-		}
-
-		for (int i = 0; i < size; i++) {
-			if (arr[i] != elem) {
-				temp[j] = arr[i];
-				j++;
-			} else {
-				count++;
+	// Remove element from array
+	public boolean remove(T elem) {
+		for (int i = 0; i < len; i++) {
+			if (arr[i].equals(elem)) {
+				removeAt(i);
+				return true;
 			}
 		}
-		arr = temp;
-		size -= count;
-
-		if (size < capacity / 4) {
-			resize();
-		}
-
+		return false;
 	}
 
-	// Find first index of item, -1 if not present
-	public int find(int elem) {
-		for (int i = 0; i < size; i++) {
-			if (arr[i] == elem) {
-				return i;
+	@Override
+	public Iterator<T> iterator() {
+		return new Iterator<T>() {
+			int index = 0;
+
+			@Override
+			public boolean hasNext() {
+				return index < len;
 			}
-		}
-		return -1;
-	}
 
-	// Resize array
-	private void resize() {
-		if (size == capacity) {
-			capacity *= 2;
-		} else if (size < capacity / 4) {
-			capacity /= 2;
-		}
-		int[] temp = new int[capacity];
-		for (int i = 0; i < size; i++) {
-			temp[i] = arr[i];
-		}
-		arr = temp;
+			@Override
+			public T next() {
+				return arr[index++];
+			}
+
+		};
 	}
 
 	@Override
 	public String toString() {
-		String repr = "[";
-		for (int i = 0; i < size; i++) {
-			repr += Integer.toString(arr[i]) + ", ";
+		if (len == 0) {
+			return "[]";
+		} else {
+			StringBuilder sb = new StringBuilder(len*2).append("[");
+			for(int i=0;i<len-1; i++) {
+				sb.append(arr[i]+", ");
+			}
+			return sb.append(arr[len-1]+"]").toString();
 		}
-		repr = repr.substring(0, repr.length() - 2) + "]";
-		return repr;
 	}
 
-	// main
-	public static void main(String[] args) {
-		DynamicArray dynamicArray = new DynamicArray(new int[] { 1, 2, 3, 4, 5 });
-		System.out.println("Initial array: " + dynamicArray);
-
-		dynamicArray.pop();
-		System.out.println("Pop: " + dynamicArray);
-
-		dynamicArray.insert(1, 21);
-		System.out.println("Insert 21 at index 1: " + dynamicArray);
-
-		dynamicArray.push(15);
-		System.out.println("Push 15: " + dynamicArray);
-
-		dynamicArray.push(21);
-		System.out.println("Push 21: " + dynamicArray);
-
-		dynamicArray.delete(2);
-		System.out.println("Delete index 2: " + dynamicArray);
-
-		dynamicArray.remove(21);
-		System.out.println("Remove 21: " + dynamicArray);
-
-		System.out.println("Find 15: " + dynamicArray.find(15));
-
-		System.out.println("Find 9: " + dynamicArray.find(9));
-
-		// Check auto-resizing
-		dynamicArray.push(21);
-		dynamicArray.push(4);
-		dynamicArray.push(123);
-		dynamicArray.push(35);
-		dynamicArray.push(11);
-		dynamicArray.push(123);
-		dynamicArray.push(73);
-		dynamicArray.push(13);
-
-		System.out.println("Resized after push: " + dynamicArray);
-
-		// Deleting items
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-		dynamicArray.pop();
-
-		System.out.println("Resized after pop: " + dynamicArray);
-
-	}
 }
