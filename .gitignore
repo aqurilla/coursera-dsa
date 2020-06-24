@@ -2,6 +2,8 @@ epi_judge_java/out/
 
 epi_judge_java/epi/out/
 
+.vscode
+
 /.classpath
 /.idea/
 /.project
