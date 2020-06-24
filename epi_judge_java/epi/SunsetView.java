@@ -19,9 +19,13 @@ public class SunsetView {
 		// Iterate from E to W
 		while (sequence.hasNext()) {
 			height = sequence.next();
+
+			// Remove all previous buildings of lower height
 			while (!stack.isEmpty() && stack.peek().height <= height) {
 				stack.pop();
 			}
+
+			// Push the new building
 			stack.push(new IdxHeight(idx, height));
 			idx++;
 		}
