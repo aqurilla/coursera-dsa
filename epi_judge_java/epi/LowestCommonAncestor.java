@@ -15,11 +15,6 @@ public class LowestCommonAncestor {
     return null;
   }
 
-  public static boolean hasNode(BinaryTreeNode<Integer> tree, BinaryTreeNode<Integer> node0,
-      BinaryTreeNode<Integer> node1) {
-
-  }
-
   @EpiTest(testDataFile = "lowest_common_ancestor.tsv")
   public static int lcaWrapper(TimedExecutor executor, BinaryTreeNode<Integer> tree, Integer key0, Integer key1)
       throws Exception {
